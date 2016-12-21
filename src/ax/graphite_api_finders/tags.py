@@ -28,7 +28,9 @@ class Tags(object):
             self.logger.error("No tags file in config found!")
             return
 
-        # Lint and load JSON tags config file
+        self._load_config()
+
+    def _load_config(self):
         jsonlint_args = ['--verbose', '--strict']
         for k, v in DEMJSON_ARGS.items():
             if k.startswith('allow_') and v is True:
@@ -46,6 +48,11 @@ class Tags(object):
                 self.tags = decode(fd.read(), **DEMJSON_ARGS)
 
     def find_nodes(self, query):
+        """Query format:
+            <prefix>.<tag_type> or
+            <prefix>.<tag_type>.<tag>
+        """
+
         query = query.pattern.split('.')
         if len(query) < 2 or query[0] != self.prefix:
             return []
@@ -57,6 +64,4 @@ class Tags(object):
             if len(query) == 3:
                 return [BranchNode(item) for item in self.tags[query[1]][query[2]]]
         except KeyError:
-            pass
-
-        return []
+            return []
