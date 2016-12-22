@@ -1,3 +1,4 @@
+import os
 import cStringIO
 from logging import getLogger
 from demjson import jsonlint
@@ -31,6 +32,11 @@ class Tags(object):
         self._load_config()
 
     def _load_config(self):
+        if not os.path.isfile(self.tags_cfg_file):
+            msg = "Tags file does not exists: %s"
+            self.logger.error(msg, self.tags_cfg_file)
+            return
+
         jsonlint_args = ['--verbose', '--strict']
         for k, v in DEMJSON_ARGS.items():
             if k.startswith('allow_') and v is True:
