@@ -40,7 +40,7 @@ class Tags(object):
         jsonlint_args = ['--verbose', '--strict']
         for k, v in DEMJSON_ARGS.items():
             if k.startswith('allow_') and v is True:
-                jsonlint_args.append('--allow=' + k.split('_', 1)[1])
+                jsonlint_args.append('--allow=' + k[len('allow_'):])
         jsonlint_args.append(self.tags_cfg_file)
 
         to_log = cStringIO.StringIO()
