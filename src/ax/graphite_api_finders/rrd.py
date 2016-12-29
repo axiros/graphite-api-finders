@@ -14,7 +14,7 @@ search_ds_name = re.compile('^ds\[(.*?)\]\.index$').search
 search_rra_index = re.compile('^rra\[(.*?)\].pdp_per_row$').search
 
 
-class RRDToolFinder(object):
+class RRDFinder(object):
     def __init__(self, config):
         self.directory = config['rrdtool']['directory']
 

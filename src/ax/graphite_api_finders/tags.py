@@ -14,7 +14,7 @@ DEMJSON_ARGS = {
 }
 
 
-class Tags(object):
+class TagsFinder(object):
     def __init__(self, config):
         self.logger = getLogger(__name__)
         self.tags = {}
